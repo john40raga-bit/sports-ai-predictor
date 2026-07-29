@@ -88,11 +88,7 @@ app.get('/run-predictor', async (req, res) => {
         console.error("Execution failed:", err);
     }
 });
-// Add this configuration to your Gemini API fetch request in index.js
-const requestBody = {
-    contents: [{ parts: [{ text: prompt }] }],
-    tools: [{ googleSearch: {} }] // This line enables real-time web search
-};
+
 // Start the server
 app.listen(PORT, () => {
     console.log(`Server is awake and listening on port ${PORT}`);
