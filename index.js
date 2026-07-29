@@ -18,7 +18,11 @@ const predictionSchema = new mongoose.Schema({
     content: String
 });
 const Prediction = mongoose.model('Prediction', predictionSchema);
-
+// Add this configuration to your Gemini API fetch request in index.js
+const requestBody = {
+    contents: [{ parts: [{ text: prompt }] }],
+    tools: [{ googleSearch: {} }] // This line enables real-time web search
+};
 // (The fetchUpcomingOdds, generateAIPredictions, and sendTelegramMessage functions stay the same as before)
 async function fetchUpcomingOdds() {
     const url = `https://api.the-odds-api.com/v4/sports/upcoming/odds/?apiKey=${process.env.ODDS_API_KEY}&regions=us,eu&markets=h2h,spreads,totals&dateFormat=iso`;
@@ -93,8 +97,4 @@ app.get('/run-predictor', async (req, res) => {
 app.listen(PORT, () => {
     console.log(`Server is awake and listening on port ${PORT}`);
 });
-// Add this configuration to your Gemini API fetch request in index.js
-const requestBody = {
-    contents: [{ parts: [{ text: prompt }] }],
-    tools: [{ googleSearch: {} }] // This line enables real-time web search
-};
+
